@@ -1,12 +1,26 @@
-const API_URL = "https://api.imgur.com/3/gallery/";
+const API_URL = "https://api.imgur.com/3/";
 
 export const asyncGetGalleries = ({
-  section,
-  sort,
-  window,
-  page
+  topic,
+  page,
+  // sort,
+  // window,
 }) => dispatch => {
-  const url = `${API_URL}/${section}/${sort}/${window}/${page}?album_previews=true`;
+  
+  console.log("asyncGetGalleries");
+  // console.log("page", page);
+
+  // const url = `${API_URL}/${section}/${sort}/${window}/${page}?album_previews=true`;
+  // const url = `${API_URL}/${section}/${sort}/${window}/?page=${page}&perPage=${perPage}`;
+  
+  // const url = `https://api.imgur.com/3/gallery/album/mku0E`; // один альбом
+  // const url = `https://api.imgur.com/3/gallery/image/BaqrF2I`;  // Одна картинка з альбому можна отримати по айді
+  // const url = `https://api.imgur.com/3/gallery/t/Awesome`; // вибір всіх картинок по тегу
+  // const url = `https://api.imgur.com/3/topics/defaults`; // топіки - в них можна снайти теги
+  
+  const url = `${API_URL}topics/${topic}?page=${page}`; // картинки для данного топіка
+
+  console.log(url);
   fetch(url, {
     async: true,
     crossDomain: true,
@@ -17,13 +31,20 @@ export const asyncGetGalleries = ({
   })
     .then(response => {
       response.json().then(
-        data =>
-          page > 0
-            ? dispatch({ type: "GALLERIES_NEXT_PAGE", payload: data.data })
-            : dispatch({
-                type: "FETCH_GALLERIES_SUCCESS",
-                payload: data.data
-              })
+        data =>{
+          console.log("data", data);
+          if (data.status != 200){
+            console.log(" no data");
+            dispatch({ type: "GALLERIES_HAS_MORE", payload: data.status })
+          } else {
+            page > 0
+              ? dispatch({ type: "GALLERIES_NEXT_PAGE", payload: data.data })
+              : dispatch({
+                  type: "FETCH_GALLERIES_SUCCESS",
+                  payload: data.data
+                })
+          }
+        }
       );
     })
     .catch(function(error) {
