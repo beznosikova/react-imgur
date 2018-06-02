@@ -3,6 +3,7 @@ const API_URL = "https://api.imgur.com/3/";
 export const asyncGetGalleries = ({
   topic,
   page,
+  newTopic
   // sort,
   // window,
 }) => dispatch => {
@@ -34,15 +35,13 @@ export const asyncGetGalleries = ({
         data =>{
           console.log("data", data);
           if (data.status != 200){
-            console.log(" no data");
+            (data.status != 404) ? 
             dispatch({ type: "GALLERIES_HAS_MORE", payload: data.status })
+            : dispatch({ type: "GALLERIES_NOT_FOUND", payload: data.error })
           } else {
-            page > 0
-              ? dispatch({ type: "GALLERIES_NEXT_PAGE", payload: data.data })
-              : dispatch({
-                  type: "FETCH_GALLERIES_SUCCESS",
-                  payload: data.data
-                })
+              (newTopic) ? 
+              dispatch({ type: "GALLERIES_NEW_TOPIC", payload: data.data })
+              :dispatch({ type: "GALLERIES_NEXT_PAGE", payload: data.data })
           }
         }
       );

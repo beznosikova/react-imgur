@@ -8,12 +8,14 @@ export default function galleriesList(state = {
 	const {hasMore, list} = state;
 
 	switch (action.type) {
-		case "FETCH_GALLERIES_SUCCESS":
-		  return {list: action.payload, hasMore};
 		case "GALLERIES_NEXT_PAGE":
 		  return {list: [...state.list, ...action.payload], hasMore};
 		case "GALLERIES_HAS_MORE":
 		  return {list, hasMore:false};      
+		case "GALLERIES_NOT_FOUND":
+		  return {list: [], hasMore:true};
+		case "GALLERIES_NEW_TOPIC":
+		  return {list: action.payload, hasMore:true};		  
 	}
 	return state;
 }

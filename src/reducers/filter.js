@@ -1,7 +1,7 @@
 export default function galleriesFilter(
   state = {
-    page: 0,
-    topic: "Awesome",
+    // page: 0,
+    topic: 11,
     // section: "hot",
     // sort: "viral",
     // window: "day",
