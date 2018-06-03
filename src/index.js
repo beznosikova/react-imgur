@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import reducers from "./reducers";
 import GalleriesList from "./components/galleriesList";
-import ImageDetail from "./components/imageDetail";
+import GalleryDetail from "./components/galleryDetail";
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -26,7 +26,7 @@ ReactDOM.render(
 		<Router>
 			<div>
 				<Route exact path="/" component={GalleriesList} />
-				<Route path="/:imageId" component={ImageDetail} />
+				<Route path="/:imageId" component={GalleryDetail} />
 			</div>
 		</Router>
 	</Provider>, 

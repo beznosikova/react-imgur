@@ -4,7 +4,8 @@ export default function galleriesFilter(
   }, action) {
   switch (action.type) {
     case "CHANGE_FILTER":
-      return Object.assign({}, state, action.payload.params);
+		return Object.assign({}, state, action.payload.params);
+    default:
+	    return state;
   }
-  return state;
 }

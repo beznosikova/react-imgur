@@ -5,7 +5,6 @@ export default function galleriesList(state = {
 	}, 
 	action) 
 {
-	console.log("action", action);
 	const {hasMore, list} = state;
 	const {page} = action;
 
@@ -18,6 +17,7 @@ export default function galleriesList(state = {
 		  return {list: [], hasMore:true, page};
 		case "GALLERIES_NEW_TOPIC":
 		  return {list: action.payload, hasMore:true, page};
+		default:
+			return state;
 	}
-	return state;
 }

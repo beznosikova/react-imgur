@@ -39,8 +39,6 @@ class ImageCard extends Component {
             <CardText>
               Topic: {item.topic}<br/>
               Coments: {item.comment_count}<br/>
-              Views: {item.views}<br/>
-              Id: {item.id}<br/>
             </CardText>
             <Button 
               href={item.link} 

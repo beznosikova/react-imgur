@@ -25,7 +25,6 @@ class GalleriesList extends Component {
   componentWillMount() {
     if (!this.props.list.list.length){
       const {topic} = this.props.filter;
-      console.log({topic, ...this.props.list});
       this.props.getGalleries({topic, ...this.props.list});
     } 
     this.asyncGetTopics();
@@ -73,9 +72,7 @@ class GalleriesList extends Component {
 
     let items = [];
     if (list.length){
-      list.map(item => {
-        items.push(<ImageCard key={item.id} item={item} />);
-      })
+      items = list.map(item => <ImageCard key={item.id} item={item} />)
     }
 
     return (
