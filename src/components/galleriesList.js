@@ -16,14 +16,18 @@ class GalleriesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topics:[]
+      topics:[],
     }
     this.asyncGetTopics = this.asyncGetTopics.bind(this);
     this.changeTopic = this.changeTopic.bind(this);
   }    
 
   componentWillMount() {
-    this.props.getGalleries(this.props.filter);
+    if (!this.props.list.list.length){
+      const {topic} = this.props.filter;
+      console.log({topic, ...this.props.list});
+      this.props.getGalleries({topic, ...this.props.list});
+    } 
     this.asyncGetTopics();
   }
 
@@ -41,7 +45,6 @@ class GalleriesList extends Component {
       .then(response => {
         response.json().then(
           data =>{
-            console.log("data", data);
             this.setState({topics:data.data})
           }
         );
@@ -57,7 +60,6 @@ class GalleriesList extends Component {
   }
 
   changeTopic(e){
-    console.log(e.target.value);
     let topic = e.target.value;
     this.props.changeFilter({topic});
     this.props.getGalleries({page:0, topic, newTopic:true});
@@ -65,7 +67,7 @@ class GalleriesList extends Component {
 
   render() {
     const loader = <div className="loader" key="loading-div">Loading ...</div>;
-    const { list, hasMore } = this.props.list;
+    const { list, hasMore, page } = this.props.list;
     const { topic } = this.props.filter;
     const { topics } = this.state;
 
@@ -88,7 +90,7 @@ class GalleriesList extends Component {
           {
             list.length ? (
               <InfiniteScroll
-                  pageStart={0}
+                  pageStart={page}
                   loadMore={this.getNextPage.bind(this)}
                   hasMore={hasMore}
                   loader={loader}

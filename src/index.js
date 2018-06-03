@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import reducers from "./reducers";
 import GalleriesList from "./components/galleriesList";
+import ImageDetail from "./components/imageDetail";
 
 import registerServiceWorker from './registerServiceWorker';
 
@@ -20,12 +21,13 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
-console.log(store.getState());
-
 ReactDOM.render(
 	<Provider store={store}>
 		<Router>
-			<Route exact path="/" component={GalleriesList} />
+			<div>
+				<Route exact path="/" component={GalleriesList} />
+				<Route path="/:imageId" component={ImageDetail} />
+			</div>
 		</Router>
 	</Provider>, 
 	document.getElementById('root')

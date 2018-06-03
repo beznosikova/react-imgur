@@ -17,45 +17,42 @@ class ImageCard extends Component {
     arrUrl[lastIndex] = arrUrl[lastIndex].replace(/\./, imgSuffix + '.');
     return arrUrl.join('/');
   }
+
   render(){
     const {item} = this.props;
-  let imgItem = (item.images)? item.images[0] : item;
-  let imgUrl = "";
-  if (imgItem.gifv){
-    imgUrl = imgItem.link;
-  } else {
-    imgUrl = this.getSmallImgUrl(imgItem.link,'m')
-  }
-return(
-  <Col xs="6" sm="4" key={item.id}>
-    <Card>
-      <Link to='/'> {/*inner url!!!!!!!!!!!!!!!!!!!!!!*/}
-      <CardImg 
-        top 
-        width="100%" 
-        src={imgUrl}
-        alt={item.title} 
-      />
-      </Link>
-      <CardBody>
-        <CardTitle>{this.textShort(item.title)}</CardTitle>
-        <CardText>
-          Topic: {item.topic}<br/>
-          Coments: {item.comment_count}<br/>
-          Views: {item.views}<br/>
-        </CardText>
-        <Button 
-          href={item.link} 
-          target="_blank" 
-          color="secondary"
-        >
-          External link
-        </Button>
-      </CardBody>
-    </Card>
-  </Col>
-);
-}
-}
+    let imgItem = (item.images)? item.images[0] : item;
+    let imgUrl = (imgItem.gifv) ? imgItem.link : this.getSmallImgUrl(imgItem.link,'m');
+    let detailUrl = `/${item.id}`;
+    return(
+      <Col xs="6" sm="4" key={item.id}>
+        <Card>
+          <Link to={detailUrl}>
+          <CardImg 
+            top 
+            width="100%" 
+            src={imgUrl}
+            alt={item.title} 
+          />
+          </Link>
+          <CardBody>
+            <CardTitle>{this.textShort(item.title)}</CardTitle>
+            <CardText>
+              Topic: {item.topic}<br/>
+              Coments: {item.comment_count}<br/>
+              Views: {item.views}<br/>
+              Id: {item.id}<br/>
+            </CardText>
+            <Button 
+              href={item.link} 
+              target="_blank" 
+              color="secondary"
+            >
+              External link
+            </Button>
+          </CardBody>
+        </Card>
+      </Col>
+    );
+}}
 
 export default ImageCard;

@@ -1,10 +1,6 @@
 export default function galleriesFilter(
   state = {
-    // page: 0,
     topic: 11,
-    // section: "hot",
-    // sort: "viral",
-    // window: "day",
   }, action) {
   switch (action.type) {
     case "CHANGE_FILTER":
